@@ -9,5 +9,7 @@ class Calc:
         return x*y
 
     def divide(self, x, y):
+        if y == 0:
+            raise ValueError("Dzielenie przez 0")
         return x/y
 
