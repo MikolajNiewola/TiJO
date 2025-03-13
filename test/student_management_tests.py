@@ -49,21 +49,21 @@ class StudentManagementTestCase(unittest.TestCase):
 
         # when
         result = student_management.add_grade(id, subject, grade)
-        student_management.add_grade(id, "Informatyka", 4.0)
+        student_management.add_grade(id, "Fizyka", 4.0)
 
         # then
         self.assertEqual(result, True)
 
-    # def test_avg_grades_should_show_avg_of_all_grades_from_subject(self):
-    #     # given
-    #     student_management = StudentManagement()
-    #     subject = "Fizyka"
-    #
-    #     # when
-    #     result = student_management.avg_grades(subject)
-    #
-    #     # then
-    #     self.assertEqual(result, 3.5)
+    def test_avg_grades_should_show_avg_of_all_grades_from_subject(self):
+        # given
+        student_management = StudentManagement()
+        subject = "Fizyka"
+
+        # when
+        result = student_management.avg_grades(subject)
+
+        # then
+        self.assertEqual(result, 3.5)
 
 if __name__ == '__main__':
     unittest.main()

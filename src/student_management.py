@@ -6,9 +6,9 @@ class StudentManagement:
         self.student_list = []
         self.grade_list = []
         self.add_student("student1", "Adamprzez2a", 21)
-        # self.add_grade("student1", "Fizyka", 3.0)
-        # self.add_student("student2", "Robert", 23)
-        # self.add_grade("student2", "Fizyka", 4.0)
+        self.add_grade("student1", "Fizyka", 3.0)
+        self.add_student("student2", "Robert", 23)
+        self.add_grade("student2", "Fizyka", 4.0)
 
     def add_student(self, id: str, name: str, age: int) -> bool:
         """
@@ -26,7 +26,7 @@ class StudentManagement:
         if not (id, name, age):
             return False
 
-        self.student_list.append({"id": id, "name": name, "age": age})
+        self.student_list.append({"id": id, "name": name, "age": age, "grades":{}})
         return True
 
     def update_student(self, id: str, name: str, age: int) -> bool:
@@ -90,24 +90,15 @@ class StudentManagement:
         if not (student_id, subject, grade):
             return False
 
-        correct_grades = [2.0, 3.0, 3.5, 4.0, 4.5, 5.0]
-
-        if grade not in correct_grades:
+        if grade not in {2.0, 3.0, 3.5, 4.0, 4.5, 5.0}:
             return False
 
-# działa ale nie fajnie
-        # for student in self.student_list:
-        #     if student["id"] == student_id:
-        #         student["grades"] = {"subject": subject, "grade": grade}
-        #         print(self.student_list)
-        #         return True
-
-# nie działa ale lepiej
-        # for student in self.student_list:
-        #     if student["id"] == student_id:
-        #         student[subject] = grade
-        #         print(self.student_list)
-        #         return True
+        for student in self.student_list:
+            if student["id"] == student_id:
+                if subject not in student["grades"]:
+                    student["grades"][subject] = []
+                student["grades"][subject].append(grade)
+                return True
 
         return False
 
@@ -121,14 +112,14 @@ class StudentManagement:
         Returns:
             Srednia ocen z przedmiotu jako liczba zmiennoprzecinkowa.
         """
-        subject_counter = 0
+        grade_count = 0
         grade_sum = 0
         for student in self.student_list:
-            for sub in student["grades"]:
-                if sub["subject"] == subject:
-                    subject_counter += 1
-                    grade_sum += sub["grade"]
+            if subject in student["grades"]:
+                grade_count += len(student["grades"][subject])
+                grade_sum += sum(student["grades"][subject])
 
-        grade_avg = grade_sum/subject_counter
+
+        grade_avg = grade_sum/grade_count
 
         return grade_avg
