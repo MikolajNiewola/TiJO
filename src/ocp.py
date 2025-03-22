@@ -1,3 +1,12 @@
+from abc import ABC, abstractmethod
+
+
+class Figure(ABC):
+    @abstractmethod
+    def draw(self):
+        pass
+
+
 class Square:
     def __init__(self, a):
         self.a = a
@@ -20,7 +29,7 @@ class Triangle:
 
 class FigureDrawer:
 
-    def draw(self, figure):
+    def draw(self, figure: Figure):
         figure.draw()
 
 

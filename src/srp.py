@@ -6,42 +6,35 @@ class Order:
 
 
 class OrderValidator:
-    def __init__(self, order):
-        self.order = order
-
-    def validate_order(self):
+    def validate_order(self, order):
         print("Walidacja zamowienia.")
 
 
 class OrderToDatabaseator:
-    def __init__(self, order):
-        self.order = order
 
-    def save_order_to_database(self):
+    def save_order_to_database(self, order):
         print("Zapisywanie zamowienia do bazy danych.")
 
 
 class OrderConfirmator:
-    def __init__(self, order):
-        self.order = order
 
-    def send_confirmation_email(self):
+    def send_confirmation_email(self, order):
         print("Wysylanie e-maila potwierdzajacego.")
 
 
 class OrderProcessor:
-    def __init__(self, order):
+    def __init__(self, order, validator, databaseator, confirmator):
         self.order = order
-        self.validator = OrderValidator(order)
-        self.databaseator = OrderToDatabaseator(order)
-        self.confirmator = OrderConfirmator(order)
+        self.validator = validator
+        self.databaseator = databaseator
+        self.confirmator = confirmator
 
     def process_order(self):
-        self.validator.validate_order()
-        self.databaseator.save_order_to_database()
-        self.confirmator.send_confirmation_email()
+        self.validator.validate_order(self.order)
+        self.databaseator.save_order_to_database(self.order)
+        self.confirmator.send_confirmation_email(self.order)
 
 
 order = Order("123", ["Produkt A", "Produkt B"], "Jan Kowalski")
-processor = OrderProcessor(order)
+processor = OrderProcessor(order, OrderValidator(), OrderToDatabaseator(), OrderConfirmator())
 processor.process_order()

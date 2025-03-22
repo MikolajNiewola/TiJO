@@ -1,7 +1,17 @@
 from abc import ABC, abstractmethod
 
 
-class Light:
+class Device(ABC):
+    @abstractmethod
+    def turn_on(self):
+        pass
+
+    @abstractmethod
+    def turn_on(self):
+        pass
+
+
+class Light(Device):
     def turn_on(self):
         print("Light is on")
 
@@ -9,7 +19,7 @@ class Light:
         print("Light is off")
 
 
-class Fan:
+class Fan(Device):
     def turn_on(self):
         print("Fan is spinning")
 
@@ -18,15 +28,19 @@ class Fan:
 
 
 class Button:
-    def __init__(self, light: Light):
-        self._light = light
+    def __init__(self, device: Device):
+        self._device = device
 
     def press(self):
-        self._light.turn_on()
+        self._device.turn_on()
 
 
 # Usage
 light = Light()
+fan = Fan()
+
 light_button = Button(light)
+fan_button = Button(fan)
 
 light_button.press()
+fan_button.press()
